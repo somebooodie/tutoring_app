@@ -1,20 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tutoring_app/app/config/routes/routes.dart';
+import 'package:tutoring_app/app/config/theme/my_theme.dart';
+import 'package:tutoring_app/firebase_options.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
+      title: "Chater",
+      themeMode: ThemeMode.light,
+      theme: MyTheme.lightTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('en'),
     );
   }
 }
+
